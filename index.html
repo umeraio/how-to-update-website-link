@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umer Malik | AI Link Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0078D7;
+            --accent: #6f42c1;
+            --gold: #FFD700;
+            --dark: #08090d;
+            --card-bg: #12141c;
+            --text: #eaf2fb;
+        }
+
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--dark); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .main-wrapper { max-width: 1200px; width: 100%; background: var(--card-bg); padding: 40px; border-radius: 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.6); border: 1px solid #2a2e3f; }
+        
+        .header-section { text-align: center; margin-bottom: 30px; }
+        h1 { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.2rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        
+        /* Section Styling */
+        .section-label { color: var(--gold); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .section-label i { color: var(--primary); }
+
+        textarea, input { width: 100%; background: #000; color: #fff; border: 1px solid #3b3b4f; border-radius: 12px; padding: 12px; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        textarea#existingCode { height: 350px; font-family: 'Consolas', monospace; font-size: 0.8rem; border-color: var(--primary); }
+
+        .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; }
+        
+        .ai-instructions { margin-top: 20px; border-color: var(--accent); height: 80px; }
+
+        /* Buttons */
+        .action-area { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .btn { padding: 18px; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.9rem; }
+        .btn-gemini { background: var(--primary); color: white; }
+        .btn-chatgpt { background: #10a37f; color: white; }
+        .btn-copy { background: #fff; color: #000; }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+
+        textarea#outputCode { grid-column: span 3; height: 300px; margin-top: 20px; color: #00ff41; border-color: var(--gold); }
+
+        .info-panel { background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 25px; border-left: 4px solid var(--gold); }
+        .info-panel p { margin: 5px 0; font-size: 0.9rem; color: var(--text-secondary); }
+
+        @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .action-area { grid-template-columns: 1fr; } textarea#outputCode { grid-column: span 1; } }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="header-section">
+        <h1><i class="fas fa-layer-group"></i> Link Generator</h1>
+        <p><i>Umer Malik: Where Craft Meets Research</i></p>
+    </div>
+
+    <div class="info-panel">
+        <p><strong><i class="fas fa-question-circle"></i> User Guide:</strong></p>
+        <p>1. Paste your <strong>Existing HTML</strong> in the blue box on the left.</p>
+        <p>2. Enter your <strong>New Links</strong> and <strong>Special Instructions</strong> on the right.</p>
+        <p>3. Choose <strong>Gemini</strong> or <strong>ChatGPT</strong> to merge and update your code perfectly.</p>
+    </div>
+
+    <div class="layout">
+        <div class="column">
+            <div class="section-label"><i class="fas fa-code"></i> Step 1: Paste Existing HTML</div>
+            <textarea id="existingCode" placeholder="Paste your current index.html here..."></textarea>
+        </div>
+
+        <div class="column">
+            <div class="section-label"><i class="fas fa-link"></i> Step 2: Enter New Links</div>
+            <div id="newLinks">
+                <div class="link-grid">
+                    <input type="text" class="b-name" placeholder="Button Name 1">
+                    <input type="text" class="b-url" placeholder="URL 1">
+                </div>
+                <div class="link-grid">
+                    <input type="text" class="b-name" placeholder="Button Name 2">
+                    <input type="text" class="b-url" placeholder="URL 2">
+                </div>
+                <div class="link-grid">
+                    <input type="text" class="b-name" placeholder="Button Name 3">
+                    <input type="text" class="b-url" placeholder="URL 3">
+                </div>
+                <div class="link-grid">
+                    <input type="text" class="b-name" placeholder="Button Name 4">
+                    <input type="text" class="b-url" placeholder="URL 4">
+                </div>
+                <div class="link-grid">
+                    <input type="text" class="b-name" placeholder="Button Name 5">
+                    <input type="text" class="b-url" placeholder="URL 5">
+                </div>
+            </div>
+
+            <div class="section-label"><i class="fas fa-comment-medical"></i> Special Instructions</div>
+            <textarea id="specialInstructions" class="ai-instructions" placeholder="e.g. 'Put the new links at the top' or 'Use red borders for new items'"></textarea>
+        </div>
+    </div>
+
+    <div class="action-area">
+        <button class="btn btn-gemini" onclick="mergeCode('Gemini')"><i class="fas fa-shuttle-space"></i> Generate with Gemini</button>
+        <button class="btn btn-chatgpt" onclick="mergeCode('ChatGPT')"><i class="fas fa-robot"></i> Generate with ChatGPT</button>
+        <button class="btn btn-copy" onclick="copyResult()"><i class="fas fa-copy"></i> Copy Updated Code</button>
+        
+        <textarea id="outputCode" readonly placeholder="The updated code will appear here after clicking generate..."></textarea>
+    </div>
+</div>
+
+<script>
+    function mergeCode(engine) {
+        const oldCode = document.getElementById('existingCode').value;
+        const names = document.getElementsByClassName('b-name');
+        const urls = document.getElementsByClassName('b-url');
+        const notes = document.getElementById('specialInstructions').value;
+
+        if (!oldCode.includes('<div class="container">')) {
+            alert("Error: Could not find the <div class='container'> in your existing code. Please make sure you are pasting the full HTML.");
+            return;
+        }
+
+        // Generate the new link HTML
+        let newLinksHtml = "";
+        for (let i = 0; i < names.length; i++) {
+            if (names[i].value.trim() !== "") {
+                newLinksHtml += `  <a href="${urls[i].value.trim()}" class="card">${names[i].value.trim()}</a>\n`;
+            }
+        }
+
+        // Logical Merge
+        // Find the end of the container div to append new links
+        const searchString = '<div class="container">';
+        const insertIndex = oldCode.indexOf(searchString) + searchString.length;
+        
+        let updatedCode = oldCode.slice(0, insertIndex) + "\n" + newLinksHtml + oldCode.slice(insertIndex);
+        
+        // Add Meta Comment about the Engine and Instructions
+        const footerNote = `\n\n`;
+        updatedCode = updatedCode.replace('</body>', footerNote + '</body>');
+
+        document.getElementById('outputCode').value = updatedCode;
+        
+        // Visual cue for success
+        document.getElementById('outputCode').style.borderColor = "#00ff41";
+        setTimeout(() => { document.getElementById('outputCode').style.borderColor = "var(--gold)"; }, 2000);
+    }
+
+    function copyResult() {
+        const copyText = document.getElementById("outputCode");
+        if (!copyText.value) { alert("Please generate the code first!"); return; }
+        copyText.select();
+        navigator.clipboard.writeText(copyText.value);
+        alert("Success! Your updated index file is ready to paste.");
+    }
+</script>
+
+</body>
+</html>
